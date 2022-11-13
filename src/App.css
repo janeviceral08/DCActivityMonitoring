@@ -1,5 +1,8 @@
+
+
 .App {
   text-align: center;
+  background-color: '#558b2f'
 }
 
 .App-logo {
@@ -35,4 +38,356 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.CompanyLogo{
+  margin: auto;
+}
+
+.InputField{
+  width: 50%;
+  margin: auto;
+}
+.InputField-Width{
+  width: 100%;
+}
+.ButtonAreaSelection{
+  margin-bottom: 2%;
+}
+.ActivityAreaText{
+  display: table-cell;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+/* The Modal (background) */
+.modal-registration {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content-registration {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.CloseRegistration {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.CloseRegistration:hover,
+.CloseRegistration:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Button 3d */
+.btn3d {
+	position: relative;
+	top: -6px;
+	border: 0;
+	transition: all 40ms linear;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.btn3d:active:focus,
+.btn3d:focus:hover,
+.btn3d:focus {
+	-moz-outline-style: none;
+	outline: medium none;
+}
+
+.btn3d:active,
+.btn3d.active {
+	top: 2px;
+}
+
+
+.btn3d.btn-primary {
+	box-shadow: 0 0 0 1px #f8f9fa inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #e1dfe1, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+	background-color: #f8f9fa;
+}
+
+.btn3d.btn-primary:active,
+.btn3d.btn-primary.active {
+	box-shadow: 0 0 0 1px #f8f9fa inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	background-color: #f8f9fa;
+}
+
+.btn3d.btn-success {
+	box-shadow: 0 0 0 1px #31c300 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #5eb924, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+	background-color: #78d739;
+}
+
+.btn3d.btn-success:active,
+.btn3d.btn-success.active {
+	box-shadow: 0 0 0 1px #30cd00 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	background-color: #78d739;
+}
+
+
+.btn3d.btn-info {
+	box-shadow: 0 0 0 1px #00a5c3 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #348FD2, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+	background-color: #39B3D7;
+}
+
+.btn3d.btn-info:active,
+.btn3d.btn-info.active {
+	box-shadow: 0 0 0 1px #00a5c3 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	background-color: #39B3D7;
+}
+
+
+.blinkTime {
+  animation: blinker .75s linear infinite;
+  color: red;
+  font-family: sans-serif;
+}
+@keyframes blinker {
+  50% {
+      opacity: 0;
+  }
+}
+
+
+
+
+
+
+/* Index CSS */
+
+
+.Indexwave{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	z-index: -1;
+}
+
+.Indexcontainer{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap :7rem;
+    padding: 0 2rem;
+}
+
+.Indeximg{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.Indexlogin-content{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+}
+
+.Indeximg img{
+	width: 500px;
+}
+
+.Indexform{
+	width: 360px;
+}
+
+.Indexlogin-content img{
+    height: 100px;
+}
+
+.Indexlogin-content h2{
+	margin: 15px 0;
+	color: #333;
+	text-transform: uppercase;
+	font-size: 2.9rem;
+}
+
+.Indexlogin-content .Indexinput-div{
+	position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 25px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+.Indexlogin-content .Indexinput-div.Indexone{
+	margin-top: 0;
+}
+
+.Indexi{
+	color: #d9d9d9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.Indexi i{
+	transition: .3s;
+}
+
+.Indexinput-div > div{
+    position: relative;
+	height: 45px;
+}
+
+.Indexinput-div > div > h5{
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 18px;
+	transition: .3s;
+}
+
+.Indexinput-div:before, .Indexinput-div:after{
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	width: 0%;
+	height: 2px;
+	background-color: #38d39f;
+	transition: .4s;
+}
+
+.Indexinput-div:before{
+	right: 50%;
+}
+
+.Indexinput-div:after{
+	left: 50%;
+}
+
+.Indexinput-div.Indexfocus:before, .Indexinput-div.Indexfocus:after{
+	width: 50%;
+}
+
+.Indexinput-div.Indexfocus > div > h5{
+	top: -5px;
+	font-size: 15px;
+}
+
+.Indexinput-div.Indexfocus > .Indexi > i{
+	color: #38d39f;
+}
+
+.Indexinput-div > div > input{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	background: none;
+	padding: 0.5rem 0.7rem;
+	font-size: 1.2rem;
+	color: #555;
+	font-family: 'poppins', sans-serif;
+}
+
+.Indexinput-div.Indexpass{
+	margin-bottom: 4px;
+}
+
+.Indexa{
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color: #999;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+
+.Indexa:hover{
+	color: #38d39f;
+}
+
+.Indexbtn{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+	background-size: 200%;
+	font-size: 1.2rem;
+	color: #fff;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+}
+.Indexbtn:hover{
+	background-position: right;
+}
+
+
+@media screen and (max-width: 1050px){
+	.Indexcontainer{
+		grid-gap: 5rem;
+	}
+}
+
+@media screen and (max-width: 1000px){
+	.Indexform{
+		width: 290px;
+	}
+
+	.Indexlogin-content h2{
+        font-size: 2.4rem;
+        margin: 8px 0;
+	}
+
+	.Indeximg img{
+		width: 400px;
+	}
+}
+
+@media screen and (max-width: 900px){
+	.Indexcontainer{
+		grid-template-columns: 1fr;
+	}
+
+	.Indeximg{
+		display: none;
+	}
+
+	.Indexwave{
+		display: none;
+	}
+
+	.Indexlogin-content{
+		justify-content: center;
+	}
 }
