@@ -1,24 +1,31 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
+import Index from "./Pages/Index";
+import ScanningPage from "./Pages/ScanningPage";
+import ButtonAreaSelections from "./Pages/ButtonAreaSelections";
+import TimeIn from "./Pages/TimeIn"
+import TimeOut from "./Pages/TimeOut";
+import RegisterEmployee from "./Pages/RegisterEmployee"
+import { useEffect } from "react";
+import cogoToast from 'cogo-toast';
+
+
 
 function App() {
+
+  useEffect(()=>{
+  
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Route path="/" exact component={Index} />
+      <Route path="/RegisterEmployee" component={RegisterEmployee} />
+      <Route path="/ScanningPage" component={ScanningPage} />
+      <Route path="/ButtonAreaSelections" component={ButtonAreaSelections} />
+      <Route path="/TimeIn/:FirstName/:MiddleName/:LastName/:Area/:Activity/:RegularOut/:RegularIn/:DateOut/:DateInMonth/:DateInDay/:DateInYear" component={TimeIn} />
+      <Route path="/TimeOut/:FirstName/:MiddleName/:LastName/:Area/:Activity/:RegularOut/:RegularIn/:DateOut/:DateIn" component={TimeOut} />
+    </Router>
   );
 }
 
