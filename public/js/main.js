@@ -1,4 +1,4 @@
-const inputs = document.querySelectorAll(".Indexinput");
+const inputs = document.querySelectorAll(".input");
 
 
 function addcl(){

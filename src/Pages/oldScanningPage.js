@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import cogoToast from 'cogo-toast';
@@ -162,131 +162,131 @@ class ScanningPage extends Component {
         super(props);
         this.state = {
             selectedActivity: "",
-            ActivityArea:[],
-            selectedActivitySequence:"",
-            WAMASGEEKAccount:"",
-            UserID:"000000001",
-            AccessID:"AC0001",
-            terminalID:'',
-            areaCode:this.props.match.params.SeqNo,
+            ActivityArea: [],
+            selectedActivitySequence: "",
+            WAMASGEEKAccount: "",
+            UserID: "000000001",
+            AccessID: "AC0001",
+            terminalID: '',
+            areaCode: this.props.match.params.SeqNo,
         };
     }
 
 
-   
 
 
-    componentDidMount(){
+
+    componentDidMount() {
         const postData = {
-                            "sessionManagement":{ "ApiKey":"d2qrB3n4KGd1z9pAc1xkB5wiC5olGbqEyiAgoR"},
-                            "dtr":{},"employee":{}
-                          }
-                          const useterminalCOde = localStorage.getItem('terminalCode') ? localStorage.getItem('terminalCode') : 'No Data';
-                          this.setState({terminalID:useterminalCOde})
-                            const API='http://150.200.3.16:29173/api/DC/TimeAttendance/ActivityList'
-                  
-             axios.post(API,postData)
-            .then((response)=> {
-        
-              let responseValue =response.data.Value.Table;
-              let responseStatus = response;
-        
-              console.log('responseStatus: ',responseStatus);
-              console.log('ActivityArea: ',responseValue);
-        
-              if(responseStatus.status === 200){
-                this.setState({ActivityArea: responseValue.sort((a, b) => a.Description.localeCompare(b.Description))})
-              }
-        
+            "sessionManagement": { "ApiKey": "d2qrB3n4KGd1z9pAc1xkB5wiC5olGbqEyiAgoR" },
+            "dtr": {}, "employee": {}
+        }
+        const useterminalCOde = localStorage.getItem('terminalCode') ? localStorage.getItem('terminalCode') : 'No Data';
+        this.setState({ terminalID: useterminalCOde })
+        const API = '/api/DC/TimeAttendance/ActivityList'
+
+        axios.post(API, postData)
+            .then((response) => {
+
+                let responseValue = response.data.Value.Table;
+                let responseStatus = response;
+
+                console.log('responseStatus: ', responseStatus);
+                console.log('ActivityArea: ', responseValue);
+
+                if (responseStatus.status === 200) {
+                    this.setState({ ActivityArea: responseValue.sort((a, b) => a.Description.localeCompare(b.Description)) })
+                }
+
             })
-            .catch((error)=> {
-              console.log('Error AreaList: ',error);    
-            });  
-        
-          }
+            .catch((error) => {
+                console.log('Error AreaList: ', error);
+            });
 
-          handleChangeselectedActivity = (Act,SeqNo) => {
-            console.log('this is:', Act+' & '+SeqNo);
-            //localStorage.removeItem('terminalCode')
-            this.setState({selectedActivity: Act,selectedActivitySequence:SeqNo})
-            let WAMASGEEKAccount = this.state.WAMASGEEKAccount;
-            let UserID = this.state.UserID;
-             if(WAMASGEEKAccount.trim().length < 1){
-                const nextSibling = document.querySelector(
-                    `input[name=WAMASGEEKAccount]`
-                  );
-                  nextSibling.focus();   
+    }
+
+    handleChangeselectedActivity = (Act, SeqNo) => {
+        console.log('this is:', Act + ' & ' + SeqNo);
+        //localStorage.removeItem('terminalCode')
+        this.setState({ selectedActivity: Act, selectedActivitySequence: SeqNo })
+        let WAMASGEEKAccount = this.state.WAMASGEEKAccount;
+        let UserID = this.state.UserID;
+        if (WAMASGEEKAccount.trim().length < 1) {
+            const nextSibling = document.querySelector(
+                `input[name=WAMASGEEKAccount]`
+            );
+            nextSibling.focus();
+        }
+        else if (UserID.trim().length < 1) {
+            const nextSibling = document.querySelector(
+                `input[name=UserID]`
+            );
+            nextSibling.focus();
+        }
+    };
+
+    submitEmployeeRecord = (itemValue) => {
+
+        console.log('UserID: ', itemValue.target.value);
+        const datenow = moment().unix();
+        if (this.state.selectedActivity.trim().length === 0) {
+            cogoToast.error("Please select activity", { position: 'top-center', heading: 'Select Activity' });
+            return;
+        }
+
+        if (itemValue.target.value.trim().length === 0) {
+            cogoToast.error("Access ID not detected", { position: 'top-center', heading: 'Please scan your Access ID' });
+            return;
+        }
+        const employeeData = {
+            "QueryType": "1",
+            "ActiveEmployee": true,
+            "sessionManagement": {
+                "ApiKey": "d2qrB3n4KGd1z9pAc1xkB5wiC5olGbqEyiAgoR"
+            },
+            "dtr": {
+                "userID": "000000001",
+                "accessID": this.state.AccessID,
+                "wamasGeekID": '',
+                "terminalID": this.state.terminalID,
+                "dateFrom": "",
+                "dateTo": "",
+                "areaCode": this.props.match.params.SeqNo,
+                "activityCode": this.state.selectedActivitySequence,
             }
-            else if(UserID.trim().length < 1){
-                const nextSibling = document.querySelector(
-                    `input[name=UserID]`
-                  );
-                  nextSibling.focus(); 
-            } 
-        };
+        }
 
-          submitEmployeeRecord = (itemValue)=>{
-            
-                console.log('UserID: ',itemValue.target.value);
-                const datenow=moment().unix();
-                if(this.state.selectedActivity.trim().length ===0){
-                    cogoToast.error("Please select activity", { position: 'top-center', heading: 'Select Activity' });
-                    return;
-                }
+        const API = '/api/DC/TimeAttendance/InOut'
 
-                if(itemValue.target.value.trim().length ===0 ){
-                    cogoToast.error("Access ID not detected", { position: 'top-center', heading: 'Please scan your Access ID' });
-                    return;
-                }
-                const employeeData={
-                    "QueryType": "1",
-                    "ActiveEmployee": true,
-                    "sessionManagement": {
-                        "ApiKey": "d2qrB3n4KGd1z9pAc1xkB5wiC5olGbqEyiAgoR"
-                    },
-                    "dtr": {
-                        "userID": "000000001",
-                        "accessID": this.state.AccessID,
-                        "wamasGeekID": '',
-                        "terminalID": this.state.terminalID,
-                        "dateFrom": "",
-                        "dateTo": "",
-                        "areaCode": this.props.match.params.SeqNo,
-                        "activityCode": this.state.selectedActivitySequence,
+        axios.post(API, employeeData)
+            .then((response) => {
+
+                let responseValue = response;
+                let responseStatus = response;
+                console.log('responseStatus submitEmployeeRecord: ', responseStatus);
+                const resultValue = responseValue.data.Value;
+                const { FirstName, MiddleName, LastName, Area, Activity, RegularOut, RegularIn, DateOut, DateIn } = resultValue.Table[0]
+
+
+                if (responseStatus.status === 200) {
+
+                    console.log('resultValue.Table[0].Column1: ', resultValue.Table[0].Column1)
+                    if (resultValue.Table[0].RecordID > 0) {
+                        window.location.href = `/TimeIn/${FirstName}/${MiddleName}/${LastName}/${Area}/${Activity}/${RegularOut == "" ? " " : RegularOut}/${RegularIn}/${DateOut == "" ? " " : DateOut}/${DateIn}`
                     }
-                }
-
-                const API='http://150.200.3.16:29173/api/DC/TimeAttendance/InOut'
-                  
-                axios.post(API,employeeData)
-               .then((response)=> {
-           
-                 let responseValue =response;
-                 let responseStatus = response;
-                 console.log('responseStatus submitEmployeeRecord: ',responseStatus);
-                 const resultValue=responseValue.data.Value;
-                 const {FirstName,MiddleName,LastName,Area,Activity,RegularOut,RegularIn,DateOut,DateIn}=resultValue.Table[0]
-            
-           
-                 if(responseStatus.status === 200){
-                   
-                    console.log('resultValue.Table[0].Column1: ', resultValue.Table[0].Column1 )
-                    if(resultValue.Table[0].RecordID >0){
-                        window.location.href=`/TimeIn/${FirstName}/${MiddleName}/${LastName}/${Area}/${Activity}/${RegularOut ==""?" ":RegularOut}/${RegularIn}/${DateOut ==""?" ":DateOut}/${DateIn}`                       
-                    }
-                   else if(resultValue.Table[0].Column1 != undefined){
+                    else if (resultValue.Table[0].Column1 != undefined) {
                         cogoToast.error("Sorry, You can't proceed", { position: 'top-center', heading: resultValue.slice(4) });
                     }
-                   
+
                 }
-           
-               })
-               .catch((error)=> {
-                 console.log('Error AreaList: ',error);
-               });  
-              //  window.location.href=`/TimeIn/Jane%20Bag-ao/${datenow}/${this.state.selectedActivity}/${this.state.selectedActivitySequence}/${this.props.match.params.Area}/${this.props.match.params.SeqNo}`                       
-              
-          }
+
+            })
+            .catch((error) => {
+                console.log('Error AreaList: ', error);
+            });
+        //  window.location.href=`/TimeIn/Jane%20Bag-ao/${datenow}/${this.state.selectedActivity}/${this.state.selectedActivitySequence}/${this.props.match.params.Area}/${this.props.match.params.SeqNo}`                       
+
+    }
 
 
 
@@ -296,8 +296,8 @@ class ScanningPage extends Component {
         return (
             <div className="IndexBody"
                 style={
-                    {height: 640}
-            }>
+                    { height: 640 }
+                }>
                 {/*  <img src={
                             require("../Assets/bg.png")
                         }
@@ -310,41 +310,41 @@ class ScanningPage extends Component {
                         }/> */}
                 <div className="text-center">
                     <img src={
-                            require("../Assets/GABC.png")
-                        }
+                        require("../Assets/GABC.png")
+                    }
                         className="img-fluid"
                         alt="GABC logo"
                         style={
-                            {width: '30%'}
-                        }/>
+                            { width: '30%' }
+                        } />
 
                 </div>
                 <div className="text-center">
                     <p className="fs-1 fw-bold">
-                        { this.props.match.params.Area} Activity Monitoring</p>
+                        {this.props.match.params.Area} Activity Monitoring</p>
                 </div>
 
                 <div className='d-grid gap-4 mx-auto'>
-                  
-                    <div className="container" style={{width:this.state.ActivityArea.length=== 1?'20%':'100%'}}>
-                      <div className={this.state.ActivityArea.length ===1?"row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1":this.state.ActivityArea.length ===2?"row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-2":"row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3"}>
+
+                    <div className="container" style={{ width: this.state.ActivityArea.length === 1 ? '20%' : '100%' }}>
+                        <div className={this.state.ActivityArea.length === 1 ? "row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1" : this.state.ActivityArea.length === 2 ? "row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-2" : "row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3"}>
                             {this.state.ActivityArea.map((info, i) => (
 
                                 <div className="col ButtonAreaSelection"
                                     key={i}>
                                     <div className="g-col-6">
 
-                            
 
-                                    <button type="button" className={this.state.ActivityArea.length=== 1?"btn-info btn-lg btn3d w-100 p-2": this.state.selectedActivity === info.Description ? "btn-info btn-lg btn3d w-100 p-2":"btn-primary  bg-opacity-10  btn3d w-100 p-2"} onClick={
-                                                () => this.handleChangeselectedActivity(info.Description,info.SeqNo)
+
+                                        <button type="button" className={this.state.ActivityArea.length === 1 ? "btn-info btn-lg btn3d w-100 p-2" : this.state.selectedActivity === info.Description ? "btn-info btn-lg btn3d w-100 p-2" : "btn-primary  bg-opacity-10  btn3d w-100 p-2"} onClick={
+                                            () => this.handleChangeselectedActivity(info.Description, info.SeqNo)
                                         }>
-                                      {info.Description}</button>
-                                       
+                                            {info.Description}</button>
+
                                     </div>
                                 </div>
                             ))
-                        } </div>
+                            } </div>
                     </div>
                     {/*<div className='InputField'>
                                 <Select
@@ -359,26 +359,26 @@ class ScanningPage extends Component {
   <span className="input-group-text" id="basic-addon1">Activity</span>
   <input type="text" className="form-control" placeholder="Activity" aria-label="Activity" aria-describedby="basic-addon1" disabled />
 </div></div>*/}
-            <div className='InputField'>
+                    <div className='InputField'>
                         <div className="input-group mb-3">
                             <span className="input-group-text" id="basic-addon1">WAMAS/GEEK Account</span>
-                            <input type="text" className="form-control" name="WAMASGEEKAccount" placeholder="Scan WAMAS/GEEK Account" aria-describedby="basic-addon1" autoFocus  onChange={(itemValue) =>{
-                                  console.log('geek changed: ',itemValue.target.value);
-                                  this.setState({WAMASGEEKAccount:itemValue.target.value})
-                                  const nextSibling = document.querySelector(
+                            <input type="text" className="form-control" name="WAMASGEEKAccount" placeholder="Scan WAMAS/GEEK Account" aria-describedby="basic-addon1" autoFocus onChange={(itemValue) => {
+                                console.log('geek changed: ', itemValue.target.value);
+                                this.setState({ WAMASGEEKAccount: itemValue.target.value })
+                                const nextSibling = document.querySelector(
                                     `input[name=UserID]`
-                                  );
-                                  nextSibling.focus();                        
-                                }} />
+                                );
+                                nextSibling.focus();
+                            }} />
                         </div>
                     </div>
                     <div className='InputField'>
                         <div className="input-group mb-3">
                             <span className="input-group-text" id="basic-addon1">Access ID</span>
-                            <input type="text" className="form-control" name="UserID" placeholder="Scan your Access ID" aria-describedby="basic-addon1" onChange={(itemValue)=>this.submitEmployeeRecord(itemValue)}/>
+                            <input type="text" className="form-control" name="UserID" placeholder="Scan your Access ID" aria-describedby="basic-addon1" onChange={(itemValue) => this.submitEmployeeRecord(itemValue)} />
                         </div>
                     </div>
-                   
+
 
                 </div>
             </div>
